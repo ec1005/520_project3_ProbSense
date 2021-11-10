@@ -55,4 +55,17 @@ def checkfortarget(curr,target,terrain):
             return n<0.5
         elif(terrain==3):
             return n<0.2
+           
+def reevaluate_target(curr,pg):
+    max_prob=0
+    for cell,val in np.ndenumerate(pg):
+        if(val>max_prob):
+            max_prob=val
+    l=[] #list of cells having equal probabilities..then we use this list to break ties and return 1 cell (new target)
+    for cell,val in np.ndenumerate(pg):
+        if(val==max_prob):
+            l.append(cell)
+    newtarget=breakties(curr,l)
+    return newtarget
+    
   
