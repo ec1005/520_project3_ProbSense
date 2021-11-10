@@ -67,5 +67,20 @@ def reevaluate_target(curr,pg):
             l.append(cell)
     newtarget=breakties(curr,l)
     return newtarget
+ 
+def updateboard(curr,true_grid,pg,multiplier):
+    if(true_grid[curr]==0):
+        pg[curr]=0
+        multiplier=multiplier*(1/(1-pg[curr]))
+    elif(true_grid[curr]==1):
+        pg[curr]=pg[curr]*0.2
+        multiplier=multiplier*(1/(1-pg[curr]*0.8))
+    elif(true_grid[curr]==2):
+        pg[curr]=pg[curr]*0.5
+        multiplier=multiplier*(1/(1-pg[curr]*0.5))
+    else:
+        pg[curr]=pg[curr]*0.8
+        multiplier=multiplier*(1/(1-pg[curr]*0.2))
+    return multiplier
     
-  
+        
