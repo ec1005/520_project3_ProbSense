@@ -1,0 +1,58 @@
+import numpy as np
+from queue import Queue,PriorityQueue,LifoQueue 
+from collections import deque
+import time
+import random
+
+DIM_GRID = 5
+DENSITY = 0.3
+
+
+def gen_grid(p, n):
+    G =1* (np.random.rand(n,n)>p)
+    G[0][0] = 1
+    #G[-1][-1] = 1
+    return G
+
+def maketerrain(true_grid):
+    for i in range(0,len(true_grid)):
+        for j in range(0,len(true_grid[0])):
+            if(true_grid[i][j]==0):
+                continue
+            else:
+                true_grid[i][j]=true_grid[i][j]+random.randint(0,2)
+
+def create_target(true_grid):
+    i=random.randint(0,len(true_grid)-1)
+    j=random.randint(0,len(true_grid[0]-1))
+    while(true_grid[i][j]==0):
+        i=random.randint(0,len(true_grid)-1)
+        j=random.randint(0,len(true_grid[0]-1))
+    return (i,j)
+    
+pg=np.full((DIM_GRID,DIM_GRID),1/(DIM_GRID**2))
+
+def manhattandist(curr,curr1):
+    return abs(curr[0]-curr1[0])+abs(curr[1]-curr1[1])
+def breakties(curr,listofcells):
+    min_d=manhattandist(curr,listofcells[0])
+    win_cell=listofcells[0]
+    for cell in listofcells[1:]:
+        d=manhattandist(curr,cell)
+        if(d<min_d):
+            min_d=d
+            win_cell=cell
+    return win_cell
+
+def checkfortarget(curr,target,terrain):
+    if(curr!=target):
+        return false
+    else:
+        n=random.uniform(0,1)
+        if(terrain==1):
+            return n<0.8
+        elif(terrain==2):
+            return n<0.5
+        elif(terrain==3):
+            return n<0.2
+  
