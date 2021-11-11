@@ -12,6 +12,7 @@ class Helper:
     
     @classmethod
     def gen_grid(self,p, n):
+        '''generate a grid with blocks with some probability'''
         G =1* (np.random.rand(n,n)>p)
         while(G[0][0] != 1):
             G =1* (np.random.rand(n,n)>p)
@@ -19,6 +20,7 @@ class Helper:
     
     @classmethod
     def make_terrain(self,grid):
+        '''adds terrain to unblocked cells in the grid with an equal probability'''
         for cell,val in np.ndenumerate(grid):
             if grid[cell] != 0:
                 grid[cell] += random.randint(0,2)
@@ -26,6 +28,7 @@ class Helper:
 
     @classmethod
     def create_target(self,grid):
+        '''set a true target cell in the grid'''
         dim = len(grid)
         i = random.randint(0,dim-1)
         j = random.randint(0,dim-1)
@@ -66,6 +69,7 @@ class Helper:
 
     @classmethod
     def a_star(self,G,start,goal, he=(1,0,0),checkingSolvability=False):
+        '''make search tree from start to goal'''
         n = G.shape[0]
         g = {}
         h = {}
@@ -111,6 +115,7 @@ class Helper:
     
     @classmethod
     def DFS(self,G, start, goal):
+        '''make search tree from start to goal using DFS'''
         n=G.shape[0]
         processed={}
         prev={}
@@ -140,6 +145,7 @@ class Helper:
     
     @classmethod
     def isMazeSolvable(self,iGrid, root, goal):
+        '''checks if there exists a path from root to goal '''
         solved, prevMap,_ = self.DFS(iGrid, root, goal)
         return solved
 

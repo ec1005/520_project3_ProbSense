@@ -6,6 +6,7 @@ class Execute:
     
     @classmethod
     def breakties(self,curr,listofcells):
+    	''' Breakties within cells of same prbabilities by manhattan distance'''
         min_d=h.manhattanDist(curr,listofcells[0])
         win_cell=listofcells[0]
         for cell in listofcells[1:]:
@@ -18,10 +19,11 @@ class Execute:
         for cell in listofcells:
             if(h.manhattanDist(curr,cell)==min_d):
                 l.append(cell)
-        return random.choices(l)[0]
+        return random.choice(l)
 
     @classmethod
     def checkfortarget(self,curr,target,terrain):
+    	'''examines the current cell for target, gives false negatives on case to case basis'''
         if(curr!=target):
             return False
         else:
@@ -35,6 +37,7 @@ class Execute:
     
     @classmethod
     def reevaluate_target(self,curr,pg):
+    	'''finds a new target based on probability grid'''
         max_prob=0
         for cell,val in np.ndenumerate(pg):
             if(val>max_prob):
@@ -50,6 +53,7 @@ class Execute:
 
     @classmethod
     def updateboard(self,curr,true_grid,pg,multiplier):
+    	'''updates the probability grid for the world'''
         if(true_grid[curr]==0):
             pg[curr]=0
             multiplier=multiplier*(1/(1-pg[curr]))
