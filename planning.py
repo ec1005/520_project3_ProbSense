@@ -6,6 +6,7 @@ class PlanHelper:
     
     @classmethod
     def plan(G, start, goal):
+        '''get path from start to goal in grid G'''
         return Helper.a_star(G,start,goal)
     
     @classmethod
