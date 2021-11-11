@@ -41,8 +41,13 @@ def breakties(curr,listofcells):
         d=manhattandist(curr,cell)
         if(d<min_d):
             min_d=d
-            win_cell=cell
-    return win_cell
+            #win_cell=cell
+    #return win_cell
+    l=[] #list of cells 
+    for cell in listofcells:
+        if(manhattandist(curr,cell)==min_d):
+            l.append(cell)
+    return random.choices(l)[0]
 
 def checkfortarget(curr,target,terrain):
     if(curr!=target):
