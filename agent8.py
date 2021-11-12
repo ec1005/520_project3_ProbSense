@@ -26,7 +26,11 @@ def solve(true_grid, true_target, start = (0,0)):
 		# ----- Sense Pos -------
 		known_grid = true_grid[path[pos]]
 		if true_grid[path[pos]] == 0:
-			#update prob
+			
+			prob_grid = Execute.prob_find_target(prob_grid, known_grid)
+			# should it come before updating others?
+			prob_grid[path[pos]] = 0
+
 			next_path = Helper.a_star(known_grid,path[pos-1],target)
 			path = path[:pos+1]+next_path
 
@@ -45,10 +49,10 @@ def solve(true_grid, true_target, start = (0,0)):
 			for i in range(n):
 				if Execute.checkfortarget(path[pos], true_target, known_grid[path[pos]]):
 					examine_count += 1
-					# update prob
+					prob_grid = Execute.prob_find_target(prob_grid, known_grid)
 					return True, move_count, examine_count
 
-			#target not found => reevaluate target
+			#target not found ==> reevaluate target
 			target = Execute.reevaluate_target(path[pos], prob_grid)
 			next_path = Helper.a_star(known_grid, path[pos], target)
 			path = path[pos] + next_path
