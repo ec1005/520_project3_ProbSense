@@ -30,7 +30,7 @@ class PlanHelper:
     def planAndGetPath(self,G, start, goal):
         '''plans for a path from start to goal on grid G and returns it as well'''
         solved, prevMap, _ =  Helper.a_star(G,start,goal)
-        print("Planning.....", start, goal)
+        #print("Planning.....", start, goal)
         return self.getPath(prevMap, start,goal)
     
      

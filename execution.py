@@ -2,7 +2,7 @@ import numpy as np
 import random
 from helper import Helper as h
 from copy import deepcopy 
-
+fnProb = [0,0.2,0.5,0.8,0.65]
 class Execute:
     
     @classmethod
@@ -37,42 +37,51 @@ class Execute:
                 return n<0.2
     
     @classmethod
-    def reevaluate_target(self,curr,pg):
+    def reevaluate_target(self,curr,pg, known_grid, agentType=6):
         '''finds a new target based on probability grid'''
         max_prob=0
         for cell,val in np.ndenumerate(pg):
+            if(agentType==7):
+                val = val*(1-fnProb[int(known_grid[cell])])
             if(val>max_prob):
                 max_prob=val
-        l=[]
-                
+        l=[]      
         """ List of cells having equal probabilities..then we use this list to break ties and return 1 cell (new target) """
         for cell,val in np.ndenumerate(pg):
+            if(agentType==7):
+                val = val*(1-fnProb[int(known_grid[cell])])
             if(val==max_prob):
                 l.append(cell)
         newtarget=self.breakties(curr,l)
+        
+        while(not h.isMazeSolvable(known_grid,curr,newtarget)):
+            known_grid[newtarget] =0        
+            self.updateboard(newtarget,0,pg)
+            newtarget = self.reevaluate_target(curr,pg,known_grid)
         return newtarget
 
     @classmethod
-    def updateboard(self,curr,true_grid,pg,multiplier):
-        '''updates the probability grid for the world'''
-        if(true_grid[curr]==0):
+    def updateboard(self,curr,terrain,pg):
+        multiplier = 1
+        if(terrain==0):
             pg[curr]=0
-            multiplier=multiplier*(1/(1-pg[curr]))
-        elif(true_grid[curr]==1):
+            multiplier=(1/(1-pg[curr]))
+        elif(terrain==1):
             pg[curr]=pg[curr]*0.2
-            multiplier=multiplier*(1/(1-pg[curr]*0.8))
-        elif(true_grid[curr]==2):
+            multiplier=(1/(1-pg[curr]*0.8))
+        elif(terrain==2):
             pg[curr]=pg[curr]*0.5
-            multiplier=multiplier*(1/(1-pg[curr]*0.5))
+            multiplier=(1/(1-pg[curr]*0.5))
         else:
             pg[curr]=pg[curr]*0.8
-            multiplier=multiplier*(1/(1-pg[curr]*0.2))
-        return multiplier
+            multiplier=(1/(1-pg[curr]*0.2))
+        
+        pg = np.multiply(multiplier, pg)
+        return pg
 
     @classmethod
-    def prob_contains_target(prob_grid, known_grid, xy, terrain_xy):
+    def prob_contains_target(self,prob_grid, known_grid, xy, terrain_xy):
         case = 0
-
         if known_grid[xy] == 0:
             case = 1
         elif known_grid[xy] == 1:
@@ -86,12 +95,14 @@ class Execute:
 
         factor = 1/(1-(prob_grid[xy]*case))
 
-        prob_grid = factor*prob_grid
+        prob_grid = np.multiply(factor,prob_grid)
+        
+        prob_grid[xy] = prob_grid[xy]*(1-case)
 
         return prob_grid
 
     @classmethod
-    def prob_find_target(prob_grid, known_grid):
+    def prob_find_target(self,prob_grid, known_grid):
 
         factor = deepcopy(prob_grid)
         factor[factor == -1] = 0.7 * 0.5
