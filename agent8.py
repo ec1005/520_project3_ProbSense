@@ -1,7 +1,8 @@
 from helper import Helper
 from planning import PlanHelper
-from exection import Execute
+from execution import Execute
 from copy import deepcopy
+import numpy as np
 # generate true_grid
 # generate prob_grid
 # generate known_grid
@@ -14,56 +15,62 @@ def solve(true_grid, true_target, start = (0,0)):
 	prob_grid = np.full((N,N), 1/(N**2))
 	prob_eval_grid = deepcopy(prob_grid)
 	
-	target = Execute.reevaluate_target(pos, prob_eval_grid)
-
+	target = Execute.reevaluate_target(start, prob_eval_grid)
 	path = PlanHelper.planAndGetPath(known_grid, start, target)
 	pos = 0
 	
+	
+	print("path:", path)
 	move_count, examine_count = 0,0
 
-	for i in range(100):
-	#while (True):
-
+	#for i in range(min(100,len(path))):
+	while (True):
+		#print(i)
 		# ----- Sense Pos -------
-		known_grid = true_grid[path[pos]]
+		print("path[pos]:", path[pos])
+		known_grid[path[pos]] = true_grid[path[pos]]
 		if true_grid[path[pos]] == 0:
 			
-			prob_grid = Execute.prob_contains_target(prob_grid, known_grid)
+			prob_grid = Execute.prob_contains_target(prob_grid, known_grid, path[pos], known_grid[path[pos]])
 			find_factor = Execute.prob_find_target(prob_grid, known_grid)
 			prob_eval_grid = np.multiply(find_factor, prob_grid)
 			# should it come before updating others?
 			prob_grid[path[pos]] = 0
 
-			next_path = Helper.a_star(known_grid,path[pos-1],target)
+			next_path = PlanHelper.planAndGetPath(known_grid, path[pos], target)
 			path = path[:pos+1]+next_path
 
 		elif path[pos] == target:
+			print("path[pos]:",path[pos])
+			print("known_grid: ", known_grid)
 			# check terrain
-			if known_grid[pos] == 1:
+			if known_grid[path[pos]] == 1:
 				#flat
-				n = 1
-			if known_grid[pos] == 2:
-				#hilly
 				n = 2
-			if known_grid[pos] == 3:
+			if known_grid[path[pos]] == 2:
+				#hilly
+				n = 4
+			if known_grid[path[pos]] == 3:
 				#forest
-				n = 5
+				n = 12
 
 			for i in range(n):
 				if Execute.checkfortarget(path[pos], true_target, known_grid[path[pos]]):
 					examine_count += 1
-					prob_grid = Execute.prob_contains_target(prob_grid, known_grid)
+					prob_grid = Execute.prob_contains_target(prob_grid, known_grid, path[pos], known_grid[path[pos]])
 					find_factor = Execute.prob_find_target(prob_grid, known_grid)
 					prob_eval_grid = np.multiply(find_factor, prob_grid)
 					return True, move_count, examine_count
 
 			#target not found ==> reevaluate target
 			target = Execute.reevaluate_target(path[pos], prob_eval_grid)
-			next_path = Helper.a_star(known_grid, path[pos], target)
-			path = path[pos] + next_path
+			next_path = PlanHelper.planAndGetPath(known_grid, path[pos], target)
+			path = path[:pos] + next_path
 
 		pos+=1
 		move_count+=1
+		if pos == len(path):
+			break
 	return False, move_count, examine_count
 
 
@@ -86,3 +93,9 @@ def gen_env(p, N):
 
 	return true_grid, true_target
 
+
+tg, tt = gen_env(0.3, 5)
+print("true_grid:\n", tg)
+print("true_target:\n", tt)
+
+print(solve(tg, tt))
