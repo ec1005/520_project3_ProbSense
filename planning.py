@@ -12,23 +12,26 @@ class PlanHelper:
     def getPath(self,prevMap, start, goal):
             
         # We could have also used queue.LifoQueue here. But collections.deque is faster and has more options.    
-        path = deque()
+        path = []
         path.append(goal)
         current = goal
         
         while True:
-            #print("PATH ISSS ",path)
             if current == start:
                 break
             path.append(prevMap[current])        
             current = prevMap[current]
              
-        return path  
+        return path[::-1]  
     
     @classmethod
     def planAndGetPath(self,G, start, goal):
         solved, prevMap, _ =  Helper.a_star(G,start,goal)
-        print("Planning.....", start, goal)
+        if(not solved):
+            print("Planning.....", start, goal)
+            print("Known grid ", G)
+            #print("DFS Result ", Helper.DFS(G, start, goal))
+            
         return self.getPath(prevMap, start,goal)
     
      

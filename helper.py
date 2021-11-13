@@ -42,22 +42,23 @@ class Helper:
         return abs(cellB[0]-cellA[0]) + abs(cellB[1]-cellA[1])
 
     @classmethod
+    
     def generateChildren(self,cell, G):
-        """For astar search"""
-        n = len(G)
+        n = G.shape[0]
+        G = abs(G)
         i,j = cell
         res = []
         if(i>0):
-            if abs(G[(i-1,j)])>0:
+            if G[(i-1,j)]:
                 res.append((i-1, j))
         if(j>0):
-            if abs(G[(i,j-1)])>0:
+            if G[(i,j-1)]:
                 res.append((i, j-1))
         if(j<n-1):
-            if abs(G[(i, j+1)])>0:
+            if G[(i, j+1)]:
                 res.append((i, j+1))
         if(i<n-1):
-            if abs(G[(i+1, j)])>0:
+            if G[(i+1, j)]:
                 res.append((i+1, j))
 
         return res
@@ -72,7 +73,8 @@ class Helper:
         processed = {}
         prev = {}
         numOfCells = 0
-
+        
+        #print(G)
         for i in range(n):
             for j in range(n):
 
@@ -97,8 +99,7 @@ class Helper:
             if not processed[curr_node]:
                 numOfCells += 1
                 children = self.generateChildren(curr_node, G)
-                if(start[0]>=goal[0] and start[1]>=goal[1]):
-                    print("CHILDREN ", children)
+                                
                 for child in children:
                     if g[curr_node] + 1 < g[child]:
                         g[child] = g[curr_node] + 1
