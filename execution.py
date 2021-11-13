@@ -99,5 +99,5 @@ class Execute:
         factor[factor == 2] = 0.5
         factor[factor == 3] = 0.2
 
-        prob_grid = np.multiply(factor, prob_grid)
-        return prob_grid
+        #prob_grid = np.multiply(factor, prob_grid)
+        return factor

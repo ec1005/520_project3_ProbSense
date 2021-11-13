@@ -1,6 +1,7 @@
 from helper import Helper
 from planning import PlanHelper
 from exection import Execute
+from copy import deepcopy
 # generate true_grid
 # generate prob_grid
 # generate known_grid
@@ -11,9 +12,9 @@ def solve(true_grid, true_target, start = (0,0)):
 	N = true_grid.shape[0]
 	known_grid = -1 * np.ones((N,N))
 	prob_grid = np.full((N,N), 1/(N**2))
-
+	prob_eval_grid = deepcopy(prob_grid)
 	
-	target = Execute.reevaluate_target(pos, prob_grid)
+	target = Execute.reevaluate_target(pos, prob_eval_grid)
 
 	path = PlanHelper.planAndGetPath(known_grid, start, target)
 	pos = 0
@@ -27,7 +28,9 @@ def solve(true_grid, true_target, start = (0,0)):
 		known_grid = true_grid[path[pos]]
 		if true_grid[path[pos]] == 0:
 			
-			prob_grid = Execute.prob_find_target(prob_grid, known_grid)
+			prob_grid = Execute.prob_contains_target(prob_grid, known_grid)
+			find_factor = Execute.prob_find_target(prob_grid, known_grid)
+			prob_eval_grid = np.multiply(find_factor, prob_grid)
 			# should it come before updating others?
 			prob_grid[path[pos]] = 0
 
@@ -49,11 +52,13 @@ def solve(true_grid, true_target, start = (0,0)):
 			for i in range(n):
 				if Execute.checkfortarget(path[pos], true_target, known_grid[path[pos]]):
 					examine_count += 1
-					prob_grid = Execute.prob_find_target(prob_grid, known_grid)
+					prob_grid = Execute.prob_contains_target(prob_grid, known_grid)
+					find_factor = Execute.prob_find_target(prob_grid, known_grid)
+					prob_eval_grid = np.multiply(find_factor, prob_grid)
 					return True, move_count, examine_count
 
 			#target not found ==> reevaluate target
-			target = Execute.reevaluate_target(path[pos], prob_grid)
+			target = Execute.reevaluate_target(path[pos], prob_eval_grid)
 			next_path = Helper.a_star(known_grid, path[pos], target)
 			path = path[pos] + next_path
 
