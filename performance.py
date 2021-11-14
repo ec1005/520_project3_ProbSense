@@ -24,19 +24,22 @@ open_file = open(filename, 'rb')
 
 #print(data)
 d = {}
-for i in range(6):
-	d[i] = [0,0,0]
-	for k in range(100):
-		_, true_grid, true_target = pickle.load(open_file)
-		_, move, examine = solve(true_grid, true_target)
+for i in range(600):
+	dim, true_grid, true_target = pickle.load(open_file)
+	_, move, examine = solve(true_grid, true_target)
+	if dim in d.keys():
 
-		d[i][0] += move
-		d[i][1] += examine
-		d[i][2] += move+examine
+		d[dim][0] += move
+		d[dim][1] += examine
+		d[dim][2] += move+examine
+	else:
+		d[dim] = [move, examine, move+examine]
 
-	d[i][0] /= 100
-	d[i][1] /= 100
-	d[i][2] /= 100
+
+for key in d.keys():
+	d[key][0] /= 100
+	d[key][1] /= 100
+	d[key][2] /= 100
 
 open_file.close()
 
