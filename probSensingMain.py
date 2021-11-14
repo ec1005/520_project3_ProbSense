@@ -31,8 +31,8 @@ def moveAgentSixAndSeven(true_grid, actual_target, goal, start = (0,0), agentTyp
         
         ## ------- Is the current cell blocked? -------------
         if(true_grid[curr] == 0):  
-            if(known_grid[curr] != 0):
-                print("ERROR here")         
+            #if(known_grid[curr] != 0):
+                #print("ERROR here")         
             pg = Execute.updateboard(curr,true_grid[curr], pg)
             trace.pop(-1)
             goal1 = Execute.reevaluate_target(path[pIndex-1],pg,known_grid,agentType=agentType) 
@@ -72,15 +72,15 @@ target = Helper.create_target(true_grid)
 while(not Helper.isMazeSolvable(true_grid, (0,0), target)):
     true_grid = Helper.make_terrain(Helper.gen_grid(0.3,DIM));
     target = Helper.create_target(true_grid)
-print(true_grid, target)
+#print(true_grid, target)
 start_time = time.time();
 discoveredTarget = moveAgentSixAndSeven(true_grid, target, (0,0), agentType=6)
-print(discoveredTarget, target)
-print(time.time()-start_time)
+#print(discoveredTarget, target)
+#print(time.time()-start_time)
 start_time = time.time()
 discoveredTarget = moveAgentSixAndSeven(true_grid, target, (0,0), agentType=7)
-print(discoveredTarget, target)
-print(time.time()-start_time)
+#print(discoveredTarget, target)
+#print(time.time()-start_time)
 """true_grid = np.block([[3, 2, 0, 3, 0],
  [1, 0, 1, 1, 2],
  [0, 2, 0, 0, 3],
