@@ -3,20 +3,23 @@ import pickle
 import numpy as np
 
 '''
+
 p = 0.3
 
 filename = "dataset"
 data_file = open(filename, 'wb')
 
-
+count = 0
 for d in range(10, 70, 10):
 	for i in range(100):
 		true_grid, true_agent = gen_env(p,d)
-	pickle.dump((d,true_grid, true_agent), data_file)
+		count+=1
+		print(count)
+		pickle.dump((d,true_grid, true_agent), data_file)
 
 data_file.close()
-
 '''
+
 filename = "dataset"
 open_file = open(filename, 'rb')
 #data = pickle.load(open_file)
@@ -24,8 +27,14 @@ open_file = open(filename, 'rb')
 
 #print(data)
 d = {}
+count = 0
 for i in range(600):
-	dim, true_grid, true_target = pickle.load(open_file)
+	try:
+		dim, true_grid, true_target = pickle.load(open_file)
+		count+=1
+	except EOFError:
+		print(count)
+		break
 	_, move, examine = solve(true_grid, true_target)
 	if dim in d.keys():
 
