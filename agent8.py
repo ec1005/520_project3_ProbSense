@@ -32,8 +32,9 @@ def solve(true_grid, true_target, start = (0,0)):
 		if true_grid[path[pos]] == 0:
 			
 			prob_grid = Execute.prob_contains_target(prob_grid, known_grid, path[pos], known_grid[path[pos]])
-			find_factor = Execute.prob_find_target(prob_grid, known_grid)
-			prob_eval_grid = np.multiply(find_factor, prob_grid)
+			#find_factor = Execute.prob_find_target(prob_grid, known_grid)
+			#prob_eval_grid = np.multiply(find_factor, prob_grid)
+			prob_eval_grid = prob_grid
 			# should it come before updating others?
 			#prob_grid[path[pos]] = 0
 			if(path[pos] == target or not Helper.isMazeSolvable(known_grid,path[pos-1],target)):
@@ -67,8 +68,9 @@ def solve(true_grid, true_target, start = (0,0)):
 					return True, move_count, examine_count
 				else:
 					prob_grid = Execute.prob_contains_target(prob_grid, known_grid, path[pos], known_grid[path[pos]])
-					find_factor = Execute.prob_find_target(prob_grid, known_grid)
-					prob_eval_grid = np.multiply(find_factor, prob_grid)
+					#find_factor = Execute.prob_find_target(prob_grid, known_grid)
+					#prob_eval_grid = np.multiply(find_factor, prob_grid)
+					prob_eval_grid = prob_grid
 					examine_count+=1
 			#target not found ==> reevaluate target
 			
