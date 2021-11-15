@@ -3,15 +3,14 @@ import pickle
 import numpy as np
 
 '''
-
 p = 0.3
 
-filename = "dataset"
+filename = "dataset2"
 data_file = open(filename, 'wb')
 
 count = 0
 for d in range(10, 70, 10):
-	for i in range(100):
+	for i in range(30):
 		true_grid, true_agent = gen_env(p,d)
 		count+=1
 		print(count)
@@ -20,7 +19,7 @@ for d in range(10, 70, 10):
 data_file.close()
 '''
 
-filename = "dataset"
+filename = "dataset2"
 open_file = open(filename, 'rb')
 #data = pickle.load(open_file)
 
@@ -28,7 +27,8 @@ open_file = open(filename, 'rb')
 #print(data)
 d = {}
 count = 0
-for i in range(600):
+for i in range(180):
+	print(i)
 	try:
 		dim, true_grid, true_target = pickle.load(open_file)
 		count+=1
@@ -46,9 +46,9 @@ for i in range(600):
 
 
 for key in d.keys():
-	d[key][0] /= 100
-	d[key][1] /= 100
-	d[key][2] /= 100
+	d[key][0] /= 30
+	d[key][1] /= 30
+	d[key][2] /= 30
 
 open_file.close()
 
