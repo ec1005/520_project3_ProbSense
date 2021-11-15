@@ -101,8 +101,8 @@ class Helper:
             if not processed[curr_node]:
                 numOfCells += 1
                 children = self.generateChildren(curr_node, G)
-                if(start[0]>=goal[0] and start[1]>=goal[1]):
-                    print("CHILDREN ", children)
+                #if(start[0]>=goal[0] and start[1]>=goal[1]):
+                    #print("CHILDREN ", children)
                 for child in children:
                     if g[curr_node] + 1 < g[child]:
                         g[child] = g[curr_node] + 1

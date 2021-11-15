@@ -20,7 +20,7 @@ def solve(true_grid, true_target, start = (0,0)):
 	pos = 0
 	
 	
-	print("path:", path)
+	#print("path:", path)
 	move_count, examine_count = 0,0
 
 	#for i in range(min(100,len(path))):
@@ -64,7 +64,7 @@ def solve(true_grid, true_target, start = (0,0)):
 					#prob_grid = Execute.prob_contains_target(prob_grid, known_grid, path[pos], known_grid[path[pos]])
 					#find_factor = Execute.prob_find_target(prob_grid, known_grid)
 					#prob_eval_grid = np.multiply(find_factor, prob_grid)
-					print("TARGET FOUND", path[pos], len(path))
+					#print("TARGET FOUND", path[pos], len(path))
 					return True, move_count, examine_count
 				else:
 					prob_grid = Execute.prob_contains_target(prob_grid, known_grid, path[pos], known_grid[path[pos]])
@@ -75,7 +75,7 @@ def solve(true_grid, true_target, start = (0,0)):
 			#target not found ==> reevaluate target
 			
 			target = Execute.reevaluate_target(path[pos], prob_eval_grid,known_grid)
-			print("TARGET NOT FOUND - new target is ", target, examine_count)
+			#print("TARGET NOT FOUND - new target is ", target, examine_count)
 			next_path = PlanHelper.planAndGetPath(known_grid, path[pos], target)
 			path = path[:pos] + next_path
 
