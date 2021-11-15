@@ -21,7 +21,7 @@ def moveAgentSix(true_grid, actual_target, goal, start = (0,0), agentType = 6):
     prev = None
     
     while(pIndex>=0):
-        print(path, curr)
+        #print(path, curr)
         ## ------- MOVE ----------
         curr = path[pIndex]
         trace.append(curr)
@@ -30,11 +30,11 @@ def moveAgentSix(true_grid, actual_target, goal, start = (0,0), agentType = 6):
         
         ## ------- Is the current cell blocked? -------------
         if(true_grid[curr] == 0):
-            print(curr,"Cell is blocked")            
+            #print(curr,"Cell is blocked")            
             p_multiplier = Execute.updateboard(curr,true_grid, pg, p_multiplier)
             pg = np.multiply(p_multiplier, pg)
             p_multiplier = 1
-            print(pg)
+            #print(pg)
             trace.pop()
             if(curr == goal):
                 goal = Execute.reevaluate_target(curr,pg)
@@ -68,10 +68,10 @@ target = Helper.create_target(true_grid)
 while(not Helper.isMazeSolvable(true_grid, (0,0), target)):
     true_grid = Helper.make_terrain(Helper.gen_grid(0.3,DIM));
     target = Helper.create_target(true_grid)
-print(true_grid, target)
+#print(true_grid, target)
 
 discoveredTarget = moveAgentSix(true_grid, target, (0,0))
-print(discoveredTarget, target)
+#print(discoveredTarget, target)
         
         
     
