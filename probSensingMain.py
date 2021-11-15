@@ -67,19 +67,19 @@ def moveAgentSixAndSeven(true_grid, actual_target, goal, start = (0,0), agentTyp
     return Execute.reevaluate_target(curr,pg,known_grid, agentType=agentType), len(trace), examinations  
 
 DIM = 31
-true_grid = Helper.gen_grid(0.3,DIM)
-true_grid = Helper.make_terrain(true_grid)
-target = Helper.create_target(true_grid)
-while(not Helper.isMazeSolvable(true_grid, (0,0), target)):
-    true_grid = Helper.make_terrain(Helper.gen_grid(0.3,DIM));
-    target = Helper.create_target(true_grid)
+#true_grid = Helper.gen_grid(0.3,DIM)
+#true_grid = Helper.make_terrain(true_grid)
+#target = Helper.create_target(true_grid)
+#while(not Helper.isMazeSolvable(true_grid, (0,0), target)):
+#    true_grid = Helper.make_terrain(Helper.gen_grid(0.3,DIM));
+#    target = Helper.create_target(true_grid)
 #print(true_grid, target)
-start_time = time.time();
-discoveredTarget = moveAgentSixAndSeven(true_grid, target, (0,0), agentType=6)
+#start_time = time.time();
+#discoveredTarget = moveAgentSixAndSeven(true_grid, target, (0,0), agentType=6)
 #print(discoveredTarget, target)
 #print(time.time()-start_time)
-start_time = time.time()
-discoveredTarget = moveAgentSixAndSeven(true_grid, target, (0,0), agentType=7)
+#start_time = time.time()
+#discoveredTarget = moveAgentSixAndSeven(true_grid, target, (0,0), agentType=7)
 #print(discoveredTarget, target)
 #print(time.time()-start_time)
 """true_grid = np.block([[3, 2, 0, 3, 0],
