@@ -3,15 +3,14 @@ import pickle
 import numpy as np
 
 '''
-
 p = 0.3
 
-filename = "dataset"
+filename = "dataset2"
 data_file = open(filename, 'wb')
 
 count = 0
 for d in range(10, 70, 10):
-	for i in range(100):
+	for i in range(30):
 		true_grid, true_agent = gen_env(p,d)
 		count+=1
 		print(count)
