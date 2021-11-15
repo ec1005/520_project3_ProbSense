@@ -27,9 +27,9 @@ class PlanHelper:
     @classmethod
     def planAndGetPath(self,G, start, goal):
         solved, prevMap, _ =  Helper.a_star(G,start,goal)
-        if(not solved):
-            print("Planning.....", start, goal)
-            print("Known grid ", G)
+        #if(not solved):
+            #print("Planning.....", start, goal)
+            #print("Known grid ", G)
             #print("DFS Result ", Helper.DFS(G, start, goal))
             
         return self.getPath(prevMap, start,goal)
