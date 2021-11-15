@@ -35,11 +35,12 @@ def moveAgentSixAndSeven(true_grid, actual_target, goal, start = (0,0), agentTyp
                 print("ERROR here")         
             pg = Execute.updateboard(curr,true_grid[curr], pg)
             trace.pop(-1)
-            goal1 = Execute.reevaluate_target(path[pIndex-1],pg,known_grid,agentType=agentType) 
+            if(curr == goal or not Helper.isMazeSolvable(known_grid,path[pIndex-1], goal)):
+                goal = Execute.reevaluate_target(path[pIndex-1],pg,known_grid,agentType=agentType) 
             """if(goal1 == goal):
                 print("OMG WTF")"""
             
-            goal = goal1
+            #goal = goal1
                        
             path = PlanHelper.planAndGetPath(known_grid, path[pIndex-1], goal)
             pIndex=0

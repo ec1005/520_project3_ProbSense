@@ -52,7 +52,7 @@ class Execute:
         while(not h.isMazeSolvable(known_grid,curr,newtarget)):
             known_grid[newtarget] =0        
             self.updateboard(newtarget,0,pg)
-            newtarget = self.reevaluate_target(curr,pg,known_grid)
+            newtarget = self.reevaluate_target(curr,pg,known_grid,agentType=agentType)
         return newtarget
     
     @classmethod
