@@ -21,7 +21,8 @@ def assignStartNTarget(true_grid):
     start = Helper.create_target(true_grid)
     target = Helper.create_target(true_grid)
     
-    while(not Helper.isMazeSolvable(true_grid,start,target)):
+    while(true_grid[start] == 0 or true_grid[target]== 0 or not Helper.isMazeSolvable(true_grid,start,target)):
+        
         start = Helper.create_target(true_grid)
         target = Helper.create_target(true_grid)
     
@@ -42,14 +43,27 @@ for i in range(180):
 	print(i)
       
 	try:
+		#print("okay")
 		dim, true_grid, true_target = pickle.load(open_file)
 		start, true_target = assignStartNTarget(true_grid)
+		#print("problem")
 		count+=1
 	except EOFError:
 		print(count)
 		break
 	#_, move, examine = agent9.moveAgent9(true_grid, true_target, start, start, agentType=6)
+	
+	#if i != 24:
+	#	continue
+	#print("True Grid:")
+	#print(true_grid)
+	#print("True Target:")
+	#print(true_target)
+	#print("start:")
+	#print(start)
+
 	_, move1, examine1 = moveAgentSixAndSeven(true_grid, true_target, start, start, agentType=7)
+	
 	_, move, examine = moveAgentSixAndSeven(true_grid, true_target, start, start, agentType=6)
 	
 	if dim in d.keys():

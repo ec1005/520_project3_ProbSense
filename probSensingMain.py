@@ -16,7 +16,7 @@ def moveAgentSixAndSeven(true_grid, actual_target, goal, start = (0,0), agentTyp
     movements, examinations = 0,0
     trace = []
     
-    path = PlanHelper.planAndGetPath(known_grid,(0,0), goal)
+    path = PlanHelper.planAndGetPath(known_grid,start, goal)
     pIndex = 0
     curr = path[pIndex]
     prev = None
