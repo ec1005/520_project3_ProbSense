@@ -1,4 +1,5 @@
 from probSensingMain import moveAgentSixAndSeven
+
 import pickle
 import numpy as np
 import agent9
@@ -10,18 +11,18 @@ filename = "dataset"
 data_file = open(filename, 'wb')
 count = 0
 for d in range(10, 70, 10):
-	for i in range(100):
-		true_grid, true_agent = gen_env(p,d)
-		count+=1
-		print(count)
-		pickle.dump((d,true_grid, true_agent), data_file)
+    for i in range(100):
+        true_grid, true_agent = gen_env(p,d)
+        count+=1
+        print(count)
+        pickle.dump((d,true_grid, true_agent), data_file)
 data_file.close()
 '''
 def assignStartNTarget(true_grid, terrain=0):
     start = Helper.create_target(true_grid)
     target = Helper.create_target(true_grid)
     flag = True
-    print(terrain)
+    #print(terrain)
     if(terrain>0):
         flag = (true_grid[target] == terrain)
     count=0
@@ -37,7 +38,7 @@ def assignStartNTarget(true_grid, terrain=0):
     
     return start,target
 
-filename = "dataset"
+filename = "dataset2"
 open_file = open(filename, 'rb')
 #data = pickle.load(open_file)
 
@@ -45,12 +46,14 @@ open_file = open(filename, 'rb')
 #print(data)
 d = {}
 d1 = {}
+
+
 count = 0
 terrains = ["flat", "hilly", "forest"]
 
-for i in range(600):
-	
-	
+for i in range(180):
+    
+    
     print(i)
       
     try:
@@ -62,12 +65,12 @@ for i in range(600):
         count+=1        
         count = count%100
     except EOFError:
-    	print(count)
-    	break
-	#_, move, examine = agent9.moveAgent9(true_grid, true_target, start, start, agentType=6)
+        print(count)
+        break
+    #_, move, examine = agent9.moveAgent9(true_grid, true_target, start, start, agentType=6)
 
     #if i != 24:
-    #	continue
+    #   continue
     #print("True Grid:")
     #print(true_grid)
     #print("True Target:")
@@ -78,31 +81,53 @@ for i in range(600):
     _, move1, examine1 = moveAgentSixAndSeven(true_grid, true_target, start, start, agentType=7)
 
     _, move, examine = moveAgentSixAndSeven(true_grid, true_target, start, start, agentType=6)
+    #_, move2, examine2 = solve(true_grid, true_target, start)
     #_, move, examine = agent9.moveAgent9(true_grid, true_target, start, start, agentType=6)
     if dim in d.keys():
 
-    	d[dim][0] += move
-    	d[dim][1] += examine
-    	d[dim][2] += move+examine
+        d[dim][0].append(move) 
+        d[dim][1].append(examine)
+        d[dim][2].append(move+examine)
 
-    	d1[dim][0] += move1
-    	d1[dim][1] += examine1
-    	d1[dim][2] += move1+examine1
+        d1[dim][0].append(move1)
+        d1[dim][1].append(examine1)
+        d1[dim][2].append(move1+examine1)
+
     else:
-    	d[dim] = [move, examine, move+examine]
-    	d1[dim] = [move1, examine1, move1+examine1]
+        d[dim] = [[move], [examine], [move+examine]]
+        d1[dim] = [[move1], [examine1],[move1+examine1]]
+        # d2[dim] = [[move2], [examine2],[move2+examine2]]
 
-
+print("Agent6")
 for key in d.keys():
-	d[key][0] /= 100
-	d[key][1] /= 100
-	d[key][2] /= 100
+    print(f"Dim: {key}")
+    
+    print("Move: ")
+    print(d[key][0])
 
-	d1[key][0] /= 100
-	d1[key][1] /= 100
-	d1[key][2] /= 100
+    print("Examine: ")
+    print(d[key][1])
+
+    print("Examine+ Move: ")
+    print(d[key][2])
+    
+
+print("Agent7")
+for key in d.keys():
+    print(f"Dim: {key}")
+    
+    print("Move: ")
+    print(d[key][0])
+
+    print("Examine: ")
+    print(d[key][1])
+
+    print("Examine+ Move: ")
+    print(d[key][2])
+    
+
 
 open_file.close()
 
-print("Agent 6: ", d)
-print("Agent 7: ", d1)
+#print("Agent 6: ", d)
+#print("Agent 7: ", d1)
