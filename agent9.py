@@ -145,17 +145,19 @@ def moveAgent9(true_grid, actual_target, goal, start, agentType = 6):
             pg = calculateIntermediateProbWhenSensed(pg, known_grid,curr)
             goal = Execute.reevaluate_target(curr,pg,known_grid,agentType=agentType)
             path = PlanHelper.planAndGetPath(known_grid, path[pIndex], goal)
-            pIndex = 0
-            
-            #print(pg, goal)
-        
+            pIndex = 0            
+           
         actual_target = moveTarget(true_grid,actual_target)
        
         #pIndex+=1
                 
     return Execute.reevaluate_target(curr,pg,known_grid, agentType=agentType), len(trace), examinations
 
-tg, start, tt = gen_dyn_env(0.3, 31)
+#tg, start, tt = gen_dyn_env(0.3, 31)
+"""tg = np.block([[1,1,0],[1,1,1],[1,0,0]])
+start = (0,0)
+tt = (1,2)
 print(tg,start,tt)
 
-print(moveAgent9(tg, tt, start, start, agentType=6))
+print(moveAgent9(tg, tt, start, start, agentType=6))"""
+
