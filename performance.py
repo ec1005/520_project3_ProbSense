@@ -1,7 +1,7 @@
 from agent8_new import gen_env, solve
 import pickle
 import numpy as np
-
+from helper import Helper
 '''
 p = 0.3
 filename = "dataset2"
@@ -16,7 +16,7 @@ for d in range(10, 70, 10):
 data_file.close()
 '''
 
-print("Hello Worls")
+#("Hello Worls")
 def assignStartNTarget(true_grid):
     start = Helper.create_target(true_grid)
     target = Helper.create_target(true_grid)
@@ -28,7 +28,7 @@ def assignStartNTarget(true_grid):
     
     return start,target
 
-print("Hello Worls")
+#print("Hello Worls")
 filename = "dataset2"
 open_file = open(filename, 'rb')
 #data = pickle.load(open_file)
