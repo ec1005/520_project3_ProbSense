@@ -49,8 +49,6 @@ for i in range(180):
 		dim, true_grid, true_target = pickle.load(open_file)
 		start, true_target = assignStartNTarget(true_grid)
 		terrain = terrains[true_grid[true_target]-1]
-		if(int(dim)!=30):
-			continue
 		#print("problem")
 		count+=1
 	except EOFError:
