@@ -26,11 +26,13 @@ d = {}
 d1 = {}
 count = 0
 for i in range(180):
+	
+	
 	print(i)
+      
 	try:
 		dim, true_grid, true_target = pickle.load(open_file)
 		count+=1
-
 	except EOFError:
 		print(count)
 		break
