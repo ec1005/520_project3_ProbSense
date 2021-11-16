@@ -48,20 +48,22 @@ for i in range(180):
 	except EOFError:
 		print(count)
 		break
-	_, move, examine = agent9.moveAgent9(true_grid, true_target, start, start, agentType=6)
-	#_, move1, examine1 = moveAgentSixAndSeven(true_grid, true_target, (0,0), agentType=7)
+	#_, move, examine = agent9.moveAgent9(true_grid, true_target, start, start, agentType=6)
+	_, move1, examine1 = moveAgentSixAndSeven(true_grid, true_target, start, start, agentType=7)
+	_, move, examine = moveAgentSixAndSeven(true_grid, true_target, start, start, agentType=6)
+	
 	if dim in d.keys():
 
 		d[dim][0] += move
 		d[dim][1] += examine
 		d[dim][2] += move+examine
 
-		"""d1[dim][0] += move1
+		d1[dim][0] += move1
 		d1[dim][1] += examine1
-		d1[dim][2] += move1+examine1"""
+		d1[dim][2] += move1+examine1
 	else:
 		d[dim] = [move, examine, move+examine]
-		#d1[dim] = [move1, examine1, move1+examine1]
+		d1[dim] = [move1, examine1, move1+examine1]
 
 
 for key in d.keys():
@@ -69,11 +71,11 @@ for key in d.keys():
 	d[key][1] /= 30
 	d[key][2] /= 30
 
-	"""d1[key][0] /= 30
+	d1[key][0] /= 30
 	d1[key][1] /= 30
-	d1[key][2] /= 30"""
+	d1[key][2] /= 30
 
 open_file.close()
 
-print("Agent 9: ", d)
-#print("Agent 7: ", d1)
+print("Agent 6: ", d)
+print("Agent 7: ", d1)
