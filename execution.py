@@ -18,6 +18,20 @@ class Execute:
             if(h.manhattanDist(curr,cell)==min_d):
                 l.append(cell)
         return random.choices(l)[0]
+    
+    @classmethod
+    def breakties9(self,curr,listofcells):
+        min_d=h.manhattanDist(curr,listofcells[0])
+        win_cell=listofcells[0]
+        for cell in listofcells[1:]:
+            d=h.manhattanDist(curr,cell)
+            if(d>min_d):
+                min_d=d
+        l=[] #list of cells 
+        for cell in listofcells:
+            if(h.manhattanDist(curr,cell)==min_d):
+                l.append(cell)
+        return random.choices(l)[0]
 
     @classmethod
     def checkfortarget(self,curr,target,terrain):
@@ -48,6 +62,29 @@ class Execute:
             if(val==max_prob):
                 l.append(cell)
         newtarget=self.breakties(curr,l)
+        
+        while(not h.isMazeSolvable(known_grid,curr,newtarget)):
+            known_grid[newtarget] =0        
+            self.updateboard(newtarget,0,pg)
+            newtarget = self.reevaluate_target(curr,pg,known_grid,agentType=agentType)
+        return newtarget
+    
+    @classmethod
+    def reevaluate_target_agent9(self,curr,pg, known_grid, agentType=6):
+        max_prob=0
+        for cell,val in np.ndenumerate(pg):
+            if(agentType==7):
+                val = val*(1-fnProb[int(known_grid[cell])])
+            if(val>max_prob):
+                max_prob=val
+        l=[]      
+        """ List of cells having equal probabilities..then we use this list to break ties and return 1 cell (new target) """
+        for cell,val in np.ndenumerate(pg):
+            if(agentType==7):
+                val = val*(1-fnProb[int(known_grid[cell])])
+            if(val==max_prob):
+                l.append(cell)
+        newtarget=self.breakties9(curr,l)
         
         while(not h.isMazeSolvable(known_grid,curr,newtarget)):
             known_grid[newtarget] =0        

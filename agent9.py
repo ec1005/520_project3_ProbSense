@@ -110,7 +110,7 @@ def moveAgent9(true_grid, actual_target, goal, start, agentType = 6):
             pg = Execute.updateboard(curr,true_grid[curr], pg)
             trace.pop(-1)
             #if(curr == goal or not Helper.isMazeSolvable(known_grid,path[pIndex-1], goal)):
-            goal = Execute.reevaluate_target(path[pIndex-1],pg,known_grid,agentType=agentType) 
+            goal = Execute.reevaluate_target_agent9(path[pIndex-1],pg,known_grid,agentType=agentType) 
             path = PlanHelper.planAndGetPath(known_grid, path[pIndex-1], goal)
             pIndex=0
             
@@ -122,7 +122,7 @@ def moveAgent9(true_grid, actual_target, goal, start, agentType = 6):
             startExamining = False            
             pg = calculateIntermediateProbWhenNotSensed(pg, known_grid, blockedCells, curr)
             if(curr == goal):                
-                goal = Execute.reevaluate_target(path[pIndex],pg,known_grid,agentType=agentType)
+                goal = Execute.reevaluate_target_agent9(path[pIndex],pg,known_grid,agentType=agentType)
                 path = PlanHelper.planAndGetPath(known_grid, path[pIndex], goal)
                 pIndex = 0
             else:
@@ -143,7 +143,7 @@ def moveAgent9(true_grid, actual_target, goal, start, agentType = 6):
             #else:
             startExamining = True            
             pg = calculateIntermediateProbWhenSensed(pg, known_grid,curr)
-            goal = Execute.reevaluate_target(curr,pg,known_grid,agentType=agentType)
+            goal = Execute.reevaluate_target_agent9(curr,pg,known_grid,agentType=agentType)
             path = PlanHelper.planAndGetPath(known_grid, path[pIndex], goal)
             pIndex = 0            
            
@@ -151,7 +151,7 @@ def moveAgent9(true_grid, actual_target, goal, start, agentType = 6):
        
         #pIndex+=1
                 
-    return Execute.reevaluate_target(curr,pg,known_grid, agentType=agentType), len(trace), examinations
+    return Execute.reevaluate_target_agent9(curr,pg,known_grid, agentType=agentType), len(trace), examinations
 
 #tg, start, tt = gen_dyn_env(0.3, 31)
 """tg = np.block([[1,1,0],[1,1,1],[1,0,0]])
