@@ -113,7 +113,7 @@ def gen_env(p, N):
 	return true_grid, true_target
 
 
-tg, tt = gen_env(0.3, 20)
+#tg, tt = gen_env(0.3, 20)
 #print("true_grid:\n", tg)
 #print("true_target:\n", tt)
 #print(type(tg))
@@ -123,14 +123,14 @@ tg, tt = gen_env(0.3, 20)
 #   print(solve(tg, tt))
 #print(time.time() - st)
 
-s1=0
-s2=0
-for i in range(0,100):
-    a,b,c=solve(tg,tt)
-    s1=s1+b
-    s2=s2+c
-print("avg1",s1/100)
-print("avg2",s2/100)
+#s1=0
+#s2=0
+#for i in range(0,100):
+#    a,b,c=solve(tg,tt)
+#    s1=s1+b
+##    s2=s2+c
+#print("avg1",s1/100)
+#print("avg2",s2/100)
 
 
 # In[ ]:
