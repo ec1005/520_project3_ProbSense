@@ -54,7 +54,7 @@ terrains = ["flat", "hilly", "forest"]
 for i in range(180):
     
     
-    print(i)
+    #print(i)
       
     try:
         #print("okay")
